@@ -456,7 +456,10 @@ class PeerUI {
                     <div class="device-name font-body2"></div>
                     <div class="status font-body2"></div>
                 </div>
-            </label>`;
+            </label>
+            <div class="message-btn icon-button" title="${Localization.getTranslation('dialogs.send-message-title')}">
+                <svg class="icon"><use xlink:href="#font"/></svg>
+            </div>`;
 
         this.$el.querySelector('svg use').setAttribute('xlink:href', this._icon());
         this.$el.querySelector('.name').textContent = this._displayName();
@@ -464,6 +467,7 @@ class PeerUI {
 
         this.$label = this.$el.querySelector('label');
         this.$input = this.$el.querySelector('input');
+        this.$messageBtn = this.$el.querySelector('.message-btn');
     }
 
     addTypesToClassList() {
@@ -506,10 +510,12 @@ class PeerUI {
         if (!this._shareMode.active) {
             title = Localization.getTranslation("peer-ui.click-to-send");
             this.$input.removeAttribute('disabled');
+            this.$messageBtn.removeAttribute('hidden');
         }
         else {
             title =  Localization.getTranslation("peer-ui.click-to-send-share-mode", null, {descriptor: this._shareMode.descriptor});
             this.$input.setAttribute('disabled', true);
+            this.$messageBtn.setAttribute('hidden', true);
         }
         this.$label.setAttribute('title', title);
     }
@@ -526,6 +532,7 @@ class PeerUI {
         this._callbackTouchStart = e => this._onTouchStart(e);
         this._callbackTouchEnd = e => this._onTouchEnd(e);
         this._callbackPointerDown = e => this._onPointerDown(e);
+        this._callbackMessageClick = e => this._onMessageClick(e);
     }
 
     _bindListeners() {
@@ -544,6 +551,7 @@ class PeerUI {
             this.$el.addEventListener('contextmenu', this._callbackContextMenu);
             this.$el.addEventListener('touchstart', this._callbackTouchStart);
             this.$el.addEventListener('touchend', this._callbackTouchEnd);
+            this.$messageBtn.addEventListener('click', this._callbackMessageClick);
         }
         else {
             // Remove Events Normal Mode
@@ -556,6 +564,7 @@ class PeerUI {
             this.$el.removeEventListener('contextmenu', this._callbackContextMenu);
             this.$el.removeEventListener('touchstart', this._callbackTouchStart);
             this.$el.removeEventListener('touchend', this._callbackTouchEnd);
+            this.$messageBtn.removeEventListener('click', this._callbackMessageClick);
 
             // Add Events Share mode
             this.$el.addEventListener('pointerdown', this._callbackPointerDown);
@@ -704,6 +713,15 @@ class PeerUI {
             });
         }
         this._touchTimer = null;
+    }
+
+    _onMessageClick(e) {
+        e.stopPropagation();
+        e.preventDefault();
+        Events.fire('text-recipient', {
+            peerId: this._peer.id,
+            deviceName: this.$el.querySelector('.name').innerText
+        });
     }
 }
 
