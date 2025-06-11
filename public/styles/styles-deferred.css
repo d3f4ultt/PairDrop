@@ -111,6 +111,25 @@ x-peer input[type="file"] {
     position: absolute;
 }
 
+x-peer .message-btn {
+    position: absolute;
+    bottom: 4px;
+    right: 4px;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background-color: var(--primary-color);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+x-peer .message-btn svg {
+    width: 16px;
+    height: 16px;
+}
+
 x-peer label {
     width: var(--peer-width);
     touch-action: manipulation;
