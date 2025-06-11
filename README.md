@@ -25,6 +25,7 @@ File sharing on your local network that works on all platforms.
 
 - A multi-platform AirDrop-like solution that works.
   - Send images, documents or text via peer-to-peer connection to devices on the same local network.
+  - Exchange short messages by clicking the new message button next to a peer.
 - Internet transfers
   - Join temporary public rooms to transfer files easily over the Internet.
 - Web-app 
@@ -80,6 +81,7 @@ Connect to others in complex network situations, or over the Internet.
 ### Other Changes
 * Change your display name to easily differentiate your devices.
 * [Paste files/text and choose the recipient afterwards ](https://github.com/RobinLinus/snapdrop/pull/534)
+* Send short messages directly using the message button on each peer
 * [Prevent devices from sleeping on file transfer](https://github.com/RobinLinus/snapdrop/pull/413)
 * Warn user before PairDrop is closed on file transfer
 * Open PairDrop on multiple tabs simultaneously (Thanks [@willstott101](https://github.com/willstott101))
@@ -115,6 +117,17 @@ Connect to others in complex network situations, or over the Internet.
 [FAQ](docs/faq.md)
 
 [Host your own instance with Docker or Node.js](docs/host-your-own.md).
+
+### Quick start with Docker
+Run PairDrop locally with Docker:
+
+```bash
+docker run -d --restart=unless-stopped --name=pairdrop -p 127.0.0.1:3000:3000 ghcr.io/schlagmichdoch/pairdrop
+```
+
+This exposes the service on [http://localhost:3000](http://localhost:3000). See
+[the hosting guide](docs/host-your-own.md) for additional configuration options
+and Node.js deployment instructions.
 
 ## Support
 <a href="https://www.buymeacoffee.com/pairdrop" target="_blank">
